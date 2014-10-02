@@ -1,0 +1,12 @@
+<div class="tabbar" onload="divideTabBar()">
+		<!--menu:
+  		主页(Home): /
+  		文章目录(Archives): /archives/
+  		关于我(About me): /about/
+  		我收藏的站: /daohang/
+ 		-->
+	<% for (var i in theme.menu){ %>  
+      <div class="tabbaritem"><a class="next" href="<%- theme.menu[i] %>"><%= i %></a></div>
+    <% } %>
+</div>
+

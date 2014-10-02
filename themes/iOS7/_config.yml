@@ -1,0 +1,35 @@
+menu:
+  主页(Home): /
+  文章目录(Archives): /archives/
+  关于我(About me): /about/
+  我收藏的站: /daohang/
+ # Subscribe: /atom.xml
+
+widgets: 
+- menu
+- weibo
+- category
+- tagcloud
+
+excerpt_link: 阅读全文(Read more)
+
+fancybox: true
+
+google_analytics: true
+
+
+
+# 友言评论
+UYUserId:
+
+# cnzz统计
+cnzzId:
+
+# JiaThis分享
+jiathisUUID:
+
+weibo:
+	name: 芒果Coder
+	uid:
+	link: http://www.weibo.com/computermark
+

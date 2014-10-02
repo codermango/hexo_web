@@ -1,0 +1,34 @@
+# Header
+menu:
+  Home: /
+  Archives: /archives
+  About: /about
+rss: /atom.xml
+
+# Content
+excerpt_link: Read More
+fancybox: false
+
+# Sidebar
+sidebar: right
+widgets:
+	- category
+	- recent_posts
+	#- tag
+	- weibo
+	- tagcloud
+	- archive
+	#- links
+
+# Links
+links:
+  热前端: http://reqianduan.com
+  西瓜宝宝主题: http://themes.xiguabaobao.com
+
+# Miscellaneous
+google_analytics:
+favicon: /favicon.png
+twitter:
+google_plus:
+fb_admins: 
+fb_app_id:

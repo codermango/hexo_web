@@ -1,0 +1,88 @@
+<%
+if (config.addRootPath && theme.add_module)
+   return;
+//为了方便使用,首先对一些变量进行预处理,
+config.addRootPath = function(str){
+    if (str.length > 2 && str[0] == '/' && str[1] != '/')
+	return config.root + str.substr(1);
+    else
+	return str;
+}
+
+var tw_constyl = ['primary','success','info','warning','danger'];
+theme.tw_style = function(i)
+{
+  return tw_constyl[i%4];
+}
+
+hexo.__dump = function(obj)
+{
+    var cache = [];
+    return JSON.stringify(obj,function(key, value){
+	if (typeof value === 'object' && value !== null) {
+	    if (cache.indexOf(value) !== -1) {
+		// Circular reference found, discard key
+		return;
+	    }
+	    cache.push(value);
+	}
+	return value;
+    });
+}
+
+hexo.__ = function(item)
+{
+  return function(str)
+  {
+    var s = __(item?item + '.' + str:str);
+    return s?s:str;
+  }
+}
+
+theme.add_module = function(mod)
+{
+    if (theme.loaded_modules.indexOf(mod) < 0)
+	theme.loaded_modules.splice(-2,0,mod);
+}
+
+config.load_widgets = function(name,item,index)
+{
+    if (name.search('_') >= 0 && index)
+	return "";
+    var str="<section id='" + name + "_widget'>";
+    var widgets = [];
+    var theme_widgets = [];
+    if (theme.widgets && theme.widgets[name])
+        theme_widgets = theme.widgets[name];
+    if (item && item.widgets && item.widgets[name])
+    {
+        item.widgets[name].forEach(function(widget){
+            if (widget == '+')//+代表加载主题指定的widgets
+            {
+                theme_widgets.forEach(function(n){
+                    if (widgets.indexOf(widget) == -1)
+                        widgets.push(n);
+                })
+            }
+            else if (widgets.indexOf(widget) == -1)
+                widgets.push(widget);
+        })
+        
+    } else if (!item || item.layout !== 'page' || name.search('_') < 0)//对于页面默认不加载文章前后相关的widgets
+        widgets = widgets.concat(theme_widgets);
+
+    widgets.forEach(function(widget){
+	str += '<div class="widget" id="widget_' + name + '_' + widget + '>">';
+	str += partial('_widget/' + widget,{pos: name,item: item});
+	str += '</div>';
+    });
+
+    str +='</section>';
+    return str;
+}
+
+theme._widgets = new Object;
+
+if (hexo.hasOwnProperty('env') && hexo.env.hasOwnProperty('debug'))
+    hexo.debug = hexo.env.debug;
+%>
