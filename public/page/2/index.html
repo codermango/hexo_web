@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Mark&#39;s Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="感悟, 博客, 生活, 瑞典, IT">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Mark's Blog">
+<meta property="og:url" content="http://yoursite.com/page/2/">
+<meta property="og:site_name" content="Mark's Blog">
+<meta property="og:description" content="感悟, 博客, 生活, 瑞典, IT">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Mark's Blog">
+<meta name="twitter:description" content="感悟, 博客, 生活, 瑞典, IT">
+
+  
+    <link rel="alternative" href="/atom.xml" title="Mark&#39;s Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+
+  <!--[if lt IE 9]><script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7/html5shiv.min.js"></script><![endif]-->
+  
+
+
+  <!--  -->
+  <script type="text/javascript">
+	var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+	document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F2858f155aec784cdce50266037604ed3' type='text/javascript'%3E%3C/script%3E"));
+</script>
+
+  <meta name="baidu_union_verify" content="f4f1d8044be005d6c09350cce6f4b8ce">
+
+
+
+
+
+
+
+</head>
+<body>
+    <div id="container">
+        <div id="wrap">
+            <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Mark&#39;s Blog</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">Yesterday you said tomorrow.</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+          <a class="main-nav-link" href="/about_me">About</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="http://www.baidu.com/baidu" method="get" accept-charset="utf-8" class="search-form">
+          <input type="search" name="word" maxlength="20" class="search-form-input" placeholder="Search">
+          <input type="submit" value="" class="search-form-submit">
+          <input name=tn type=hidden value="bds">
+          <input name=cl type=hidden value="3">
+          <input name=ct type=hidden value="2097152">
+          <input type="hidden" name="si" value="yoursite.com">
+        </form>
+      </div>
+    </div>
+  </div>
+</header>
+            <div class="outer">
+                <section id="main">
+  
+    <article id="post-2014-03-02_eagerreliablebroadcast" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-meta">
+        <a href="/2014/03/02/2014-03-02_eagerreliablebroadcast/" class="article-date">
+  <time datetime="2014-03-02T14:14:08.000Z" itemprop="datePublished">3月 2 2014</time>
+</a>
+        
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/分布式系统/">分布式系统</a>
+  </div>
+
+    </div>
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2014/03/02/2014-03-02_eagerreliablebroadcast/">Eager Reliable Broadcast</a>
+    </h1>
+  
+
+            </header>
+        
+        <div class="article-entry" itemprop="articleBody">
+            
+                <p>看到这名字我就蛋疼，eager reliable broadcast，这种名字我能怎么翻译？热心可靠的broadcast？这语言的嘈我还是不吐了。</p>
+<p>这个broadcast理论上比lazy reliable broadcast要简单。先看看算法：<br><img src="http://ww4.sinaimg.cn/large/737bf613gw1ee1rrwqf5uj20i80b4jtf.jpg" alt="image"></p>
+<p>当某节点的eager reliable broadcast收到要发消息的命令时，首先把此消息存在变量delivered中，然后立即发给自己，然后再broadcast给其它人。<br>当节点收到其它节点发来的消息时，先查看自己是否已经接收过此消息，如果没有，则先把此消息存在变量delivered中，然后告诉发此消息的人我收到了，然后再转发此消息给其它人。</p>
+<p>这个算法其实就是一顿无脑转发消息确保每个correct的节点都能收到broadcast，然后用遍历delivered来控制不重复接收消息，以此来确保这个reliable，这里每个人都转发，似乎就是对与eager的诠释。</p>
+
+            
+        </div>
+        <footer class="article-footer">
+            <a data-url="http://yoursite.com/2014/03/02/2014-03-02_eagerreliablebroadcast/" data-id="bamv5kd7mpx8jjm2" class="article-share-link">分享到</a>
+            
+            
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/broadcast/">broadcast</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/分布式/">分布式</a></li></ul>
+
+        </footer>
+    </div>
+    
+</article>
+
+<!--
+
+-->
+
+
+
+  
+    <article id="post-2014-02-17_FailStopLazyReliableBroadcast" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-meta">
+        <a href="/2014/02/17/2014-02-17_FailStopLazyReliableBroadcast/" class="article-date">
+  <time datetime="2014-02-17T17:20:43.000Z" itemprop="datePublished">2月 17 2014</time>
+</a>
+        
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/分布式系统/">分布式系统</a>
+  </div>
+
+    </div>
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2014/02/17/2014-02-17_FailStopLazyReliableBroadcast/">Broadcast</a>
+    </h1>
+  
+
+            </header>
+        
+        <div class="article-entry" itemprop="articleBody">
+            
+                <p>分布式的学习真是任重而道远，很多概念没有理解，更别谈记住了，所以我需要做一些笔记了。</p>
+<p>我这里说的broadcast的概念是分布式系统中的，和其它领域的相不相同我不知道。</p>
+<p>我关注的broadcast总体分三种：  </p>
+<ol>
+<li>Best-effort Broadcast  </li>
+<li>Reliable Broadcast  </li>
+<li>Uniform Reliable Broadcast  </li>
+<li>Causal Reliable Broadcast  </li>
+</ol>
+<p>这些broadcast都有三个相同的property：  </p>
+<ol>
+<li>Validity: If pi and pj are correct, then any broadcast by pi is eventually delivered by pj.  </li>
+<li>No duplication: no messages delivered more than once.  </li>
+<li>No creation: no messages delivered unless broadcast.</li>
+</ol>
+<p>Reliable Broadcast增加一个Agreement: if a correct node delivers m, then every correct node delivers m.</p>
+<p>Uniform Reliable Broadcast增加一个Uniform Agreement: for any message m, if a process delivers m, then every correct process delivers m.<br>
+                
+                    <p class="article-more-link">
+                        <a href="/2014/02/17/2014-02-17_FailStopLazyReliableBroadcast/#more">阅读全文</a>
+                    </p>
+                
+            
+        </div>
+        <footer class="article-footer">
+            <a data-url="http://yoursite.com/2014/02/17/2014-02-17_FailStopLazyReliableBroadcast/" data-id="akvcge19nu8m0zbe" class="article-share-link">分享到</a>
+            
+            
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/broadcast/">broadcast</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/分布式/">分布式</a></li></ul>
+
+        </footer>
+    </div>
+    
+</article>
+
+<!--
+
+-->
+
+
+
+  
+    <article id="post-2014-02-14设置Mac下Dock的自动显示隐藏的延迟时间" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-meta">
+        <a href="/2014/02/14/2014-02-14设置Mac下Dock的自动显示隐藏的延迟时间/" class="article-date">
+  <time datetime="2014-02-14T00:14:40.000Z" itemprop="datePublished">2月 14 2014</time>
+</a>
+        
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Mac/">Mac</a>
+  </div>
+
+    </div>
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2014/02/14/2014-02-14设置Mac下Dock的自动显示隐藏的延迟时间/">设置Mac下Dock的自动显示隐藏的延迟时间</a>
+    </h1>
+  
+
+            </header>
+        
+        <div class="article-entry" itemprop="articleBody">
+            
+                <p>在Mac系统下，Dock是一大特色，但是对于我这种不想让Dock占掉本来就不大的屏幕的一部分的人，一般我会选择自动隐藏，但是我发现在隐藏的状态下，每次光标出发显示都有似乎1s的延时，这一点对与用触控板的时候有一点不是很方便，所以我找到了设置这个延时的方法，记录在此，以免忘记。</p>
+<p>以下第一条代码是将延时设置为0，默认是1，第二条代码是重启Dock。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">defaults <span class="keyword">write</span> <span class="keyword">com</span>.apple.Dock autohide-delay -float <span class="number">0</span></div><div class="line">killall Dock</div></pre></td></tr></table></figure>
+
+<p>若要恢复默认，则可以使用以下代码，删除以上建立的字典项目，然后会被自动重建，重建后就是默认的1s。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">defaults <span class="built_in">delete</span> <span class="keyword">com</span>.apple.Dock autohide-delay</div><div class="line">killall Dock</div></pre></td></tr></table></figure>
+
+
+
+
+            
+        </div>
+        <footer class="article-footer">
+            <a data-url="http://yoursite.com/2014/02/14/2014-02-14设置Mac下Dock的自动显示隐藏的延迟时间/" data-id="varsuf1o18pniqhx" class="article-share-link">分享到</a>
+            
+            
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Mac/">Mac</a></li></ul>
+
+        </footer>
+    </div>
+    
+</article>
+
+<!--
+
+-->
+
+
+
+  
+    <article id="post-2014-02-10圣诞攻占意大利" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-meta">
+        <a href="/2014/02/10/2014-02-10圣诞攻占意大利/" class="article-date">
+  <time datetime="2014-02-10T11:08:55.000Z" itemprop="datePublished">2月 10 2014</time>
+</a>
+        
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/行走在欧洲/">行走在欧洲</a>
+  </div>
+
+    </div>
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2014/02/10/2014-02-10圣诞攻占意大利/">圣诞攻占意大利</a>
+    </h1>
+  
+
+            </header>
+        
+        <div class="article-entry" itemprop="articleBody">
+            
+                <p>从自己能够独立思考的那时起，我就想去外面的世界看看，去看看世界是否就像书本中写的那样。所以后来，我一直不是一个安于现状的人，我觉得这个世界那么精彩，我一定不要连真正的世界是什么样都没见过就碌碌无为走完这一生。所以我在2013年12月22日的晚上收拾好行李和小伙伴们开始了我在欧洲大陆的第一次穷游。</p>
+<p>每一个穷游欧洲的人，廉价航空是必不可少的，在欧洲坐廉航的人真的好多，而且廉航的机票上是不指定座位的，就跟坐公交车一样，第一次听说的时候就被震惊到了。两个半小时后，飞机降落到了米兰附近的一个廉航机场，然后就坐机场大巴前往米兰市中心，也就在这路上，我和我的小伙伴齐感叹，我靠我是不是回中国了……高速公路的两边似乎和中国一模一样，也许在北欧待久了其它地方的环境实在是不忍直视。当车走到市中心时，被路两旁的中国商店的数量震撼到了，开始还以为这是不是唐人街之类的地方，后来才发现这就是普通的米兰街道，终于感觉到中国人要把米兰占领了。<br>
+                
+                    <p class="article-more-link">
+                        <a href="/2014/02/10/2014-02-10圣诞攻占意大利/#more">阅读全文</a>
+                    </p>
+                
+            
+        </div>
+        <footer class="article-footer">
+            <a data-url="http://yoursite.com/2014/02/10/2014-02-10圣诞攻占意大利/" data-id="oamvmec872gwunnn" class="article-share-link">分享到</a>
+            
+            
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/意大利/">意大利</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/穷游/">穷游</a></li></ul>
+
+        </footer>
+    </div>
+    
+</article>
+
+<!--
+
+-->
+
+
+
+  
+    <article id="post-2013-12-11祝我生日快乐" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-meta">
+        <a href="/2013/12/11/2013-12-11祝我生日快乐/" class="article-date">
+  <time datetime="2013-12-11T00:02:50.000Z" itemprop="datePublished">12月 11 2013</time>
+</a>
+        
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/生活/">生活</a>
+  </div>
+
+    </div>
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2013/12/11/2013-12-11祝我生日快乐/">祝我生日快乐</a>
+    </h1>
+  
+
+            </header>
+        
+        <div class="article-entry" itemprop="articleBody">
+            
+                <p>来到瑞典半年了，也是来到这里的第一个生日。</p>
+<p>都说出国是一个人孤独的旅行，有时想想也确实，出国以后，生活的轨迹早已和国内不一样，很多东西也和国内的朋友没有了共鸣，所以也就更加少了交流和沟通。但所幸还是有很好的朋友，依然记得你的生日，依然会送上最真诚的祝福。</p>
+<p>很感谢在瑞典认识的新朋友，超哥，Eating，进富帅，杰神，感谢你们生日的祝福，在KTH的日子大家都很忙，也没有办法像国内一样出去吃喝玩乐，很感谢大家平时难得的一聚，我想在若干年后，一定会是一个非常难忘的回忆。</p>
+
+                
+                    <p class="article-more-link">
+                        <a href="/2013/12/11/2013-12-11祝我生日快乐/#more">阅读全文</a>
+                    </p>
+                
+            
+        </div>
+        <footer class="article-footer">
+            <a data-url="http://yoursite.com/2013/12/11/2013-12-11祝我生日快乐/" data-id="d0d6coe9i9y7gq5g" class="article-share-link">分享到</a>
+            
+            
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/生日/">生日</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/生活/">生活</a></li></ul>
+
+        </footer>
+    </div>
+    
+</article>
+
+<!--
+
+-->
+
+
+
+  
+    <article id="post-2013-12-08软件工程笔记(2)" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-meta">
+        <a href="/2013/12/08/2013-12-08软件工程笔记(2)/" class="article-date">
+  <time datetime="2013-12-08T20:20:23.000Z" itemprop="datePublished">12月 8 2013</time>
+</a>
+        
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/软件工程/">软件工程</a>
+  </div>
+
+    </div>
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2013/12/08/2013-12-08软件工程笔记(2)/">软件工程笔记(2)</a>
+    </h1>
+  
+
+            </header>
+        
+        <div class="article-entry" itemprop="articleBody">
+            
+                <h3 id="UML_and_OOP:">UML and OOP:</h3>
+<ul>
+<li><strong>actor:</strong> describe any entity that interacts with the system</li>
+<li><strong>class:</strong> abstractions of the properties and behaviours of a set of objects</li>
+<li><strong>instance:</strong> a reality of class</li>
+<li><strong>use case diagram:</strong> describe behaviour from external view</li>
+<li><strong>extend:</strong> represent exceptional or seldom invoked cases, point to the extended case, base case can exit alone</li>
+<li><strong>include:</strong> behaviour that is shared across two or more use cases, point to the using case, base case cannot exit alone</li>
+<li><strong>class diagrams:</strong> describe the static structure of the system</li>
+<li><strong>association:</strong> 1 to 1, 1 to many, many to many</li>
+<li><strong>aggregation:</strong> empty diamond, consists of hierarchy, a special case of association</li>
+</ul>
+
+                
+                    <p class="article-more-link">
+                        <a href="/2013/12/08/2013-12-08软件工程笔记(2)/#more">阅读全文</a>
+                    </p>
+                
+            
+        </div>
+        <footer class="article-footer">
+            <a data-url="http://yoursite.com/2013/12/08/2013-12-08软件工程笔记(2)/" data-id="36sutzoxdpz7rhvy" class="article-share-link">分享到</a>
+            
+            
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/software-engineering/">software engineering</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/软件工程/">软件工程</a></li></ul>
+
+        </footer>
+    </div>
+    
+</article>
+
+<!--
+
+-->
+
+
+
+  
+    <article id="post-2013-12-07软件工程笔记(1)" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-meta">
+        <a href="/2013/12/07/2013-12-07软件工程笔记(1)/" class="article-date">
+  <time datetime="2013-12-06T23:20:23.000Z" itemprop="datePublished">12月 7 2013</time>
+</a>
+        
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/软件工程/">软件工程</a>
+  </div>
+
+    </div>
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2013/12/07/2013-12-07软件工程笔记(1)/">软件工程笔记(1)</a>
+    </h1>
+  
+
+            </header>
+        
+        <div class="article-entry" itemprop="articleBody">
+            
+                <h3 id="1-_Basic_way_to_deal_with_complexity:">1. Basic way to deal with complexity:</h3>
+<ul>
+<li><strong>abstraction</strong>: ignore non-essential details</li>
+<li><strong>decomposition</strong>: break problem into sub-systems</li>
+<li><strong>hierarchy</strong>: simple relationship between trunks</li>
+</ul>
+<h3 id="2-_Characteristics_of_software_to_other_products:">2. Characteristics of software to other products:</h3>
+<ul>
+<li>softare is developed not manufactured</li>
+<li>does not ware out but difficult to maintenance</li>
+<li>most of them are customerized</li>
+<li>cost is not depend on volume of production</li>
+</ul>
+<h3 id="3-_waterfall:">3. waterfall:</h3>
+<ul>
+<li>clear milestone</li>
+<li>no looking back</li>
+<li>easy to check progress</li>
+<li>no change after current phase</li>
+</ul>
+
+                
+                    <p class="article-more-link">
+                        <a href="/2013/12/07/2013-12-07软件工程笔记(1)/#more">阅读全文</a>
+                    </p>
+                
+            
+        </div>
+        <footer class="article-footer">
+            <a data-url="http://yoursite.com/2013/12/07/2013-12-07软件工程笔记(1)/" data-id="1c47ao9e306wb7hj" class="article-share-link">分享到</a>
+            
+            
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/software-engineering/">software engineering</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/软件工程/">软件工程</a></li></ul>
+
+        </footer>
+    </div>
+    
+</article>
+
+<!--
+
+-->
+
+
+
+  
+    <article id="post-2013-12-06这些天" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-meta">
+        <a href="/2013/12/06/2013-12-06这些天/" class="article-date">
+  <time datetime="2013-12-05T23:12:10.000Z" itemprop="datePublished">12月 6 2013</time>
+</a>
+        
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/生活/">生活</a>
+  </div>
+
+    </div>
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2013/12/06/2013-12-06这些天/">这些天</a>
+    </h1>
+  
+
+            </header>
+        
+        <div class="article-entry" itemprop="articleBody">
+            
+                <p><img src="http://ww2.sinaimg.cn/large/737bf613gw1eb9m1qygoxj20c807tt9f.jpg" alt="&quot;Stockholm&quot;"></p>
+<p>又一次困到不行，在国外读书真是一件无法让人感同身受的事情，你的诉苦换来的也只是大家说都一样，都苦逼，各有各的苦，但实际是根本不一样，无法感同身受的事情我也不想再说，这也是为什么我想要有自己的独立博客，因为很多事情就像这样说的，不说憋屈，说了矫情。</p>
+<p>好了，我应该把博客往学术的方向拉，但我觉得说了和没说一样，但是我还是要来定一个基调。首先这个博客是为了记录我的学习生活成长的东西，作为IT男还是有一种用独立博客证明自己至少是干技术的一种心理，所以这也算满足我一直以来的梦想。其次就是通过这个博客可以督促自己学习更多前端的东西，我有时候真的感觉自己喜欢前端超过后台，虽然我没有什么艺术细胞对于前台也了解不多。不过记录生活也是的挺好的，哈哈…..</p>
+
+                
+                    <p class="article-more-link">
+                        <a href="/2013/12/06/2013-12-06这些天/#more">阅读全文</a>
+                    </p>
+                
+            
+        </div>
+        <footer class="article-footer">
+            <a data-url="http://yoursite.com/2013/12/06/2013-12-06这些天/" data-id="him0tgvazlzx9s9q" class="article-share-link">分享到</a>
+            
+            
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/出国/">出国</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/博客/">博客</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/坚持/">坚持</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/奋斗/">奋斗</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/生活/">生活</a></li></ul>
+
+        </footer>
+    </div>
+    
+</article>
+
+<!--
+
+-->
+
+
+
+  
+    <article id="post-2013-11-02明天的世界我不曾所知" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-meta">
+        <a href="/2013/11/02/2013-11-02明天的世界我不曾所知/" class="article-date">
+  <time datetime="2013-11-01T23:00:00.000Z" itemprop="datePublished">11月 2 2013</time>
+</a>
+        
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/生活/">生活</a>
+  </div>
+
+    </div>
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2013/11/02/2013-11-02明天的世界我不曾所知/">明天的世界我不曾所知</a>
+    </h1>
+  
+
+            </header>
+        
+        <div class="article-entry" itemprop="articleBody">
+            
+                <p>已经用了很长时间Mac OS了，也许是我太懒了，已经不想去打理windows下那么多繁杂的事物，看到很多随着系统的使用时间变长不断增长的文件和文件夹对于每天琐事不断累成狗的人来说实在是太烦人了，也许这就是强迫症，见不得不认识的文件出现在眼前。Mac确实让人省心不少，至少我发现我已经离不开了。</p>
+<p>从我高中毕业后，就一直用的笔记本键盘，也早已用不惯台式机的那种外接键盘，也更体会不出别人说的外接键盘好用在哪里。也许这就是习惯，不知不觉改变着你的生活和轨迹。曾经走过的路和未来要走的路其实就是取决于习惯，不习惯平庸的生活，不习惯没有梦想的生活，才会习惯去挑战自己，才去习惯追逐那些似乎飘渺遥远的东西。</p>
+<p>其实得失是一种很主观的东西，永远也不要想得到所有的东西，对于我个人来说，我也羡慕美帝便宜的Apple，羡慕袋鼠国的黄金海岸，羡慕腐国的9又3/4站台，还有天朝的美食。但是别人也会说羡慕欧洲申根区的自由行，童话的北欧和神奇的极光。 曾经在穷游上看到一个行者说，北欧没有童话，北欧就是童话。</p>
+<p>羡慕没什么不好，生活本来就很平淡，为何不让羡慕的东西来丰富自己的生活呢。其实这就是满足了两个让人新潮彭拜的梦想：读万卷书，行万里路。</p>
+<p>可是这也是充满挫折的生活，但接受挫折并不是去接受这个世界的黑暗或者不公平，而是去学会自己挑战生活，在一种机遇与挑战并存的环境中探求自己的欲望和梦想，这时候面临的逆境才可以被称作逆境。当我第一天站在KTH学生会楼前看到接待我们的学长学姐和外国学生谈笑风生的时候，身处其中的当时我才发现这真的很难，可是慢慢的，当习惯了这些之后，才发现自己的进步也是显而易见的。</p>
+<p>国内所谓的挫折有一种这样的描述：一帆风顺，有一天发现别人有钱自己没钱，或者某人比自己更富有，发现某某凭关系顶了你的位置，发现别人会拍马屁你不会拍，发现会哭的孩子有奶吃，好了，发现社会不公平了，要变的现实了。喔，然后这就是挫折。从很多现象和描述我看到的是这样的。</p>
+<p>可是，这个，怎么能叫挫折？这个叫时代的弊病，社会的顽疾。</p>
+<p>我喜欢这样的描述，不要把温水煮青蛙当成了不起的长大，战胜挫折是身为一只青蛙，敏锐地意识到水温在上升，奋勇跳出来，知道如何关掉加热器，回来解救你的青蛙小伙伴们。</p>
+<h2 id="后记">后记</h2>
+<p>马上就可以上瑞典语课了，我想这会是一个很奇特的经历，可以看懂别人看不懂的东西是一件很酷的事情。8号有个大使馆赞助的针对皇家理工学院，斯德哥尔摩大学和卡罗林斯卡学院的单身party，没想到我和我的小伙伴都默默报名了，找不到妹子去蹭蹭饭还是挺好的。室友前两天考完试就直奔哥本哈根了，这时一个人的时候才有心情记录下那些转瞬即逝的感想。</p>
+<p>Good night, Stockholm.</p>
+<p>Mark<br>2013年11月2日</p>
+
+            
+        </div>
+        <footer class="article-footer">
+            <a data-url="http://yoursite.com/2013/11/02/2013-11-02明天的世界我不曾所知/" data-id="s29lu6s2o9m09m94" class="article-share-link">分享到</a>
+            
+            
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/瑞典/">瑞典</a></li></ul>
+
+        </footer>
+    </div>
+    
+</article>
+
+<!--
+
+-->
+
+
+
+  
+    <article id="post-2013-08-03这几天的Android体验" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-meta">
+        <a href="/2013/08/03/2013-08-03这几天的Android体验/" class="article-date">
+  <time datetime="2013-08-02T22:00:00.000Z" itemprop="datePublished">8月 3 2013</time>
+</a>
+        
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Android/">Android</a>
+  </div>
+
+    </div>
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2013/08/03/2013-08-03这几天的Android体验/">这几天的Android体验</a>
+    </h1>
+  
+
+            </header>
+        
+        <div class="article-entry" itemprop="articleBody">
+            
+                <p>这几天买了一个小米2S，看到里面自带了收音机功能，瞬间把我拉到当年用诺基亚听收音机的年代。上初中那会儿，刚开始听收音机，那时用的是真正的收音机，在那种单调无聊啥都不能干的日子里，每天晚上躺在床上听收音机应该是当时最轻松的时刻了。上高中就改用诺基亚听了，但是到后来用了iPhone之后，由于没有内置收音机模块，在那个流量惜如金的年代，就再也没听过收音机了。电台是听得最多，人们打进电话，表达对谁谁谁的喜欢，点一首歌，貌似在十年前电台主持和听众互动的平台就只有电话了。反观现在，同样的节目，互动的方式有了微博，有了qq群，还是很有以前的那种感觉，唯一和以前不同的就是，现在自己上床的时候，电台节目早就结束了。</p>
+
+                
+                    <p class="article-more-link">
+                        <a href="/2013/08/03/2013-08-03这几天的Android体验/#more">阅读全文</a>
+                    </p>
+                
+            
+        </div>
+        <footer class="article-footer">
+            <a data-url="http://yoursite.com/2013/08/03/2013-08-03这几天的Android体验/" data-id="3pb2puytp7wgw4is" class="article-share-link">分享到</a>
+            
+            
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Google/">Google</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/IT/">IT</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ios/">ios</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/小米/">小米</a></li></ul>
+
+        </footer>
+    </div>
+    
+</article>
+
+<!--
+
+-->
+
+
+
+  
+  
+    <nav id="page-nav">
+      <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/3/">Next &raquo;</a>
+    </nav>
+  
+</section>
+                
+                    <aside id="sidebar">
+  	
+    	
+
+  	<div class="widget-wrap">
+    	<h3 class="widget-title">分类</h3>
+    	<div class="widget">
+      		<ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Erlang/">Erlang</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Mac/">Mac</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Prolog/">Prolog</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/SSH/">SSH</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/分布式系统/">分布式系统</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/影视/">影视</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/生活/">生活</a><span class="category-list-count">15</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/行走在欧洲/">行走在欧洲</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/软件工程/">软件工程</a><span class="category-list-count">2</span></li></ul>
+      		
+    	</div>
+  	</div>
+
+  	
+    	
+  <div class="widget-wrap">
+    <h3 class="widget-title">近期文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2014/09/29/20140929_Prolog逆波兰式转换中缀表达式/">Prolog逆波兰式转换成中缀表达式</a>
+          </li>
+        
+          <li>
+            <a href="/2014/09/10/20140910_ssh的使用/">ssh的使用</a>
+          </li>
+        
+          <li>
+            <a href="/2014/06/28/20140628_启动多个进程/">【Erlang】如何一次性启动多个Erlang进程(4)</a>
+          </li>
+        
+          <li>
+            <a href="/2014/06/28/20140628_Erlang进程通信/">【Erlang】简单Erlang进程通信例子(3)</a>
+          </li>
+        
+          <li>
+            <a href="/2014/05/21/2014-05-21_ConsistentHashing/">一致性哈希(Consistent Hashing)</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  	
+    	<iframe width="100%" height="290" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=290&fansRow=2&ptype=1&speed=0&skin=1&isTitle=0&noborder=1&isWeibo=1&isFans=0&uid=1937503763&verifier=88272bc2&dpc=1"></iframe>
+  	
+    	
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Android/" style="font-size: 10.00px;">Android</a><a href="/tags/Erlang/" style="font-size: 15.00px;">Erlang</a><a href="/tags/Google/" style="font-size: 10.00px;">Google</a><a href="/tags/IT/" style="font-size: 10.00px;">IT</a><a href="/tags/KTH/" style="font-size: 10.00px;">KTH</a><a href="/tags/Mac/" style="font-size: 10.00px;">Mac</a><a href="/tags/Prolog/" style="font-size: 10.00px;">Prolog</a><a href="/tags/broadcast/" style="font-size: 13.33px;">broadcast</a><a href="/tags/ios/" style="font-size: 10.00px;">ios</a><a href="/tags/shared-memory/" style="font-size: 10.00px;">shared memory</a><a href="/tags/software-engineering/" style="font-size: 11.67px;">software engineering</a><a href="/tags/ssh/" style="font-size: 10.00px;">ssh</a><a href="/tags/一致性哈希/" style="font-size: 10.00px;">一致性哈希</a><a href="/tags/元旦/" style="font-size: 11.67px;">元旦</a><a href="/tags/光棍节/" style="font-size: 10.00px;">光棍节</a><a href="/tags/出国/" style="font-size: 10.00px;">出国</a><a href="/tags/分布式/" style="font-size: 20.00px;">分布式</a><a href="/tags/单身/" style="font-size: 10.00px;">单身</a><a href="/tags/博客/" style="font-size: 11.67px;">博客</a><a href="/tags/坚持/" style="font-size: 16.67px;">坚持</a><a href="/tags/奇葩/" style="font-size: 10.00px;">奇葩</a><a href="/tags/奋斗/" style="font-size: 18.33px;">奋斗</a><a href="/tags/小米/" style="font-size: 10.00px;">小米</a><a href="/tags/开始/" style="font-size: 10.00px;">开始</a><a href="/tags/影视/" style="font-size: 10.00px;">影视</a><a href="/tags/情义/" style="font-size: 10.00px;">情义</a><a href="/tags/意大利/" style="font-size: 10.00px;">意大利</a><a href="/tags/感悟/" style="font-size: 10.00px;">感悟</a><a href="/tags/感情/" style="font-size: 11.67px;">感情</a><a href="/tags/感谢/" style="font-size: 10.00px;">感谢</a><a href="/tags/拉脱维亚/" style="font-size: 10.00px;">拉脱维亚</a><a href="/tags/新航道/" style="font-size: 10.00px;">新航道</a><a href="/tags/毕业/" style="font-size: 10.00px;">毕业</a><a href="/tags/瑞典/" style="font-size: 10.00px;">瑞典</a><a href="/tags/生日/" style="font-size: 11.67px;">生日</a><a href="/tags/生活/" style="font-size: 11.67px;">生活</a><a href="/tags/穷游/" style="font-size: 11.67px;">穷游</a><a href="/tags/越狱/" style="font-size: 10.00px;">越狱</a><a href="/tags/软件工程/" style="font-size: 11.67px;">软件工程</a><a href="/tags/逆波兰式/" style="font-size: 10.00px;">逆波兰式</a>
+    </div>
+  </div>
+
+  	
+    	
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/09/">September 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/06/">June 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/05/">May 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/03/">March 2014</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/02/">February 2014</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/12/">December 2013</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/11/">November 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/08/">August 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/07/">July 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/05/">May 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/02/">February 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/11/">November 2012</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/09/">September 2012</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/07/">July 2012</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/01/">January 2012</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/12/">December 2011</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/09/">September 2011</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/07/">July 2011</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/12/">December 2010</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/11/">November 2010</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  	
+</aside>
+                
+            </div>
+            <footer id="footer">
+    
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            Copyright &copy; 2014 Mark<br>
+            Powered by <a href="http://zespia.tw/hexo/" target="_blank">Hexo</a>.
+            Theme by <a href="https://github.com/xiangming/landscape-plus" target="_blank">Landscape+</a>.
+            Built on <a href="http://www.apple.com" target="_blank"></a>
+            <br>
+            <a href="http://codermango.com/about_site">About the site.</a>
+        </div>
+    </div>
+</footer>
+        </div>
+        <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/about_me" class="mobile-nav-link">About</a>
+  
+</nav>
+        
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+
+
+<script src="/js/script.js" type="text/javascript"></script>
+
+    </div>
+</body>
+</html>
