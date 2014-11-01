@@ -3,6 +3,7 @@ menu:
   Home: /
   Archives: /archives
   About: /about_me
+  Game: /game
 rss: /atom.xml
 
 # Content
@@ -27,7 +28,7 @@ links:
 
 # Miscellaneous
 google_analytics:
-favicon: /favicon.png
+favicon: /favicon.ico
 twitter:
 google_plus:
 fb_admins: 

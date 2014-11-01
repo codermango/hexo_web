@@ -1219,6 +1219,7 @@ a.article-title:hover {
   -webkit-border-radius: 3px;
   border-radius: 3px;
   font-size: 15px;
+  margin: 0px 5px 0px 5px;
 }
 .article-entry pre code {
   background: none;
