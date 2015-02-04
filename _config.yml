@@ -4,7 +4,7 @@
 
 # Site
 title: Mark's Blog
-subtitle: Yesterday you said tomorrow.
+subtitle: Peace and Enjoy
 description: 感悟, 博客, 生活, 瑞典, IT
 author: Mark
 email:
@@ -85,6 +85,6 @@ exclude_generator:
 deploy:
   type: github
   #repository: https://github.com/codermango/codermango.github.io.git
-  repository: git@gitcafe.com:codermango/codermango.git
+  repository: https://gitcafe.com/codermango/codermango.git
   #branch: master
   branch: gitcafe-pages
